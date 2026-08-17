@@ -1,0 +1,48 @@
+name: Build RV Joomla Update
+
+on:
+  push:
+    paths:
+      - '.build/rv0511/READY'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild update package
+        shell: bash
+        run: |
+          cat .build/rv0511/chunk* | base64 -d > updates/com_rvreservations_0.5.11-update.zip
+          echo "db1c2d3cec8a6924f074e91d7f735c69317650eabc49c5eecef6db1172fdc637  updates/com_rvreservations_0.5.11-update.zip" | sha256sum -c -
+          cat > updates/rvreservations.xml <<'XML'
+          <?xml version="1.0" encoding="utf-8"?>
+          <updates>
+            <update>
+              <name>RV Reservations</name>
+              <description>LA District UPC RV Reservations component</description>
+              <element>com_rvreservations</element>
+              <type>component</type>
+              <version>0.5.11</version>
+              <client>administrator</client>
+              <downloads>
+                <downloadurl type="full" format="zip">https://raw.githubusercontent.com/dewaineparker-bp/ladistupc-rv-reservations/main/updates/com_rvreservations_0.5.11-update.zip</downloadurl>
+              </downloads>
+              <targetplatform name="joomla" version="6\.(0|1|2|3|4|5|6|7|8|9)" />
+              <php_minimum>8.3</php_minimum>
+              <sha256>db1c2d3cec8a6924f074e91d7f735c69317650eabc49c5eecef6db1172fdc637</sha256>
+              <tags><tag>stable</tag></tags>
+            </update>
+          </updates>
+          XML
+      - name: Commit update package
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add updates/com_rvreservations_0.5.11-update.zip updates/rvreservations.xml
+          git commit -m "Publish RV Reservations 0.5.11" || exit 0
+          git push
