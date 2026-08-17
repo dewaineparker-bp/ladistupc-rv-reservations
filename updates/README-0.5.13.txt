@@ -1,0 +1,1 @@
+This release is intended to be served as a full Joomla component update package. The binary ZIP must be published at updates/com_rvreservations_0.5.13.zip before updates/rvreservations.xml advertises it.
