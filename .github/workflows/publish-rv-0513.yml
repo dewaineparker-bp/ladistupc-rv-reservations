@@ -43,8 +43,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          grep -q '<version>0.5.13</version>' /tmp/rv-package/rvreservations.xml
-          grep -q 'updates/rvreservations.xml' /tmp/rv-package/rvreservations.xml
+          grep -q '<version>0.5.13</version>' /tmp/rv-package/com_rvreservations.xml
+          grep -q 'updates/rvreservations.xml' /tmp/rv-package/com_rvreservations.xml
           rm -f updates/com_rvreservations_0.5.13.zip
           (cd /tmp/rv-package && zip -qr "$GITHUB_WORKSPACE/updates/com_rvreservations_0.5.13.zip" .)
           unzip -t updates/com_rvreservations_0.5.13.zip
