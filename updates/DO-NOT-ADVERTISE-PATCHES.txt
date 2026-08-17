@@ -1,0 +1,1 @@
+Only complete installable component ZIPs may be referenced by the Joomla update feed.
