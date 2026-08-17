@@ -1,0 +1,5 @@
+RV Reservations 0.5.11
+
+Adds physical-site statuses: Active / Reservable, Inactive, and Map Only.
+Inactive and map-only lots remain visible on the campground map but are never selectable.
+Adds physical map records for sites 28 and 88 when missing, and removes the stray 1A map overlay while preserving the site record.
