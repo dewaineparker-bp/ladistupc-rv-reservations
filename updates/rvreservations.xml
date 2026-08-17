@@ -5,13 +5,14 @@
     <description>LA District UPC RV Reservations component</description>
     <element>com_rvreservations</element>
     <type>component</type>
-    <version>0.5.12</version>
+    <version>0.5.13</version>
     <client>administrator</client>
     <downloads>
       <downloadurl type="full" format="zip">https://raw.githubusercontent.com/dewaineparker-bp/ladistupc-rv-reservations/main/updates/com_rvreservations_0.5.13.zip</downloadurl>
     </downloads>
     <targetplatform name="joomla" version="6\.(0|1|2|3|4|5|6|7|8|9)" />
     <php_minimum>8.3</php_minimum>
+    <sha256>24be1b2e5ce23904d37cfb1e10e28f75460f3c68d6e4d01939c12b20c66f86b7</sha256>
     <tags><tag>stable</tag></tags>
   </update>
 </updates>
