@@ -1,0 +1,1 @@
+Bootstrap chunks reconstruct the v0.5.14 Joomla update ZIP. The GitHub Actions workflow verifies SHA-256 and publishes the ZIP plus Joomla update manifest under /updates.
