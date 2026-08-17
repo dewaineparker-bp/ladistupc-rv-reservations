@@ -1,0 +1,1 @@
+v0.5.14 is a transport test update built from the v0.5.13 functional baseline. It intentionally excludes unchanged campground JPG files from the update ZIP while preserving the installed copies.
