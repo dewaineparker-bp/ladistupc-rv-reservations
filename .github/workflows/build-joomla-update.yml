@@ -1,0 +1,65 @@
+name: Build Joomla RV Reservations update
+
+on:
+  push:
+    paths:
+      - 'bootstrap/0.5.14/**'
+      - '.github/workflows/build-joomla-update.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Rebuild update ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p updates
+          cat bootstrap/0.5.14/part*.b64 | base64 -d > updates/com_rvreservations_0.5.14.zip
+          echo "af318e390a086e62e80429497ae0600e4a705f9aaea3e04120442cff9e24425e  updates/com_rvreservations_0.5.14.zip" | sha256sum -c -
+          unzip -t updates/com_rvreservations_0.5.14.zip
+
+      - name: Write Joomla update manifest
+        shell: bash
+        run: |
+          cat > updates/rvreservations.xml <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <updates>
+            <update>
+              <name>RV Reservations</name>
+              <description>LA District UPC RV Reservations component</description>
+              <element>com_rvreservations</element>
+              <type>component</type>
+              <version>0.5.14</version>
+              <client>administrator</client>
+              <downloads>
+                <downloadurl type="full" format="zip">https://raw.githubusercontent.com/dewaineparker-bp/ladistupc-rv-reservations/main/updates/com_rvreservations_0.5.14.zip</downloadurl>
+              </downloads>
+              <targetplatform name="joomla" version="6\.(0|1|2|3|4|5|6|7|8|9)" />
+              <php_minimum>8.3</php_minimum>
+              <sha256>af318e390a086e62e80429497ae0600e4a705f9aaea3e04120442cff9e24425e</sha256>
+              <tags><tag>stable</tag></tags>
+            </update>
+          </updates>
+          EOF
+
+      - name: Publish update files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add updates/com_rvreservations_0.5.14.zip updates/rvreservations.xml
+          if git diff --cached --quiet; then
+            echo "Nothing to publish."
+          else
+            git commit -m "Publish Joomla RV Reservations 0.5.14"
+            git push
+          fi
