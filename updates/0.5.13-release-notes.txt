@@ -1,0 +1,4 @@
+RV Reservations 0.5.13
+Full Joomla component package.
+Public reservation UI styling and form presentation improvements.
+Preserves existing database records and map coordinates.
